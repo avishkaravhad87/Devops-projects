@@ -31,7 +31,7 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "SSH key pair name"
+  description = "new-project"
   type        = string
 }
 
