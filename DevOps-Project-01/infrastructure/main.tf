@@ -11,9 +11,9 @@ terraform {
   
   backend "s3" {
     # Update these values according to your setup
-     bucket = "s3dipbucket"
+     bucket = "three-tier-project-by-avishkar"
      key    = "java-app/terraform.tfstate"
-     region = "us-east-1"
+     region = "ap-south-1"
   }
 }
 
