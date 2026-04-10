@@ -1,8 +1,7 @@
-# RDS Module
-
-data "aws_secretsmanager_secret_version" "db_password" {
-  secret_id = "${var.environment}-db-password"
-}
+# 1. Comment out or delete the data source since the secret doesn't exist
+# data "aws_secretsmanager_secret_version" "db_password" {
+#   secret_id = "${var.environment}-db-password"
+# }
 
 resource "aws_db_subnet_group" "main" {
   name       = "${var.environment}-db-subnet-group"
@@ -28,14 +27,17 @@ resource "aws_db_instance" "main" {
 
   db_name  = var.db_name
   username = var.db_username
-  password = data.aws_secretsmanager_secret_version.db_password.secret_string
+  
+  # 2. Use the variable directly instead of the data source
+  password = var.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.main.name
   vpc_security_group_ids = var.security_group_ids
 
-  backup_retention_period = 7
-  backup_window          = "03:00-04:00"
-  maintenance_window     = "sun:04:00-sun:05:00"
+  # 3. FIX: Changed from 7 to 1 to satisfy AWS Free Tier restrictions
+  backup_retention_period = 1 
+  backup_window           = "03:00-04:00"
+  maintenance_window      = "sun:04:00-sun:05:00"
 
   skip_final_snapshot       = true
   final_snapshot_identifier = "${var.environment}-db-final-snapshot"
