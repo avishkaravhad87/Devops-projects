@@ -41,15 +41,8 @@ variable "db_name" {
 }
 
 variable "db_username" {
-  description = "Database master username"
+  description = "The username for the database"
   type        = string
-  sensitive   = true
-}
-
-variable "db_password" {
-  description = "Database master password"
-  type        = string
-  sensitive   = true
 }
 
 variable "instance_type" {
@@ -59,7 +52,22 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "Name of the SSH key pair"
+  description = "The name of the SSH key pair"
+  type        = string
+}
+
+variable "db_retention_period" {
+  description = "The retention period for the database in days"
+  type        = number
+}
+
+variable "project_name" {
+  description = "The name of the project"
+  type        = string
+}
+
+variable "ami_id" {
+  description = "The AMI ID for the instance"
   type        = string
 }
 
@@ -85,4 +93,4 @@ variable "allowed_ssh_cidr_blocks" {
   description = "List of CIDR blocks allowed to SSH to bastion host"
   type        = list(string)
   default     = ["0.0.0.0/0"]
-} 
+}
